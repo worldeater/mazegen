@@ -14,25 +14,25 @@ Example: maze 0 70 20 50
 
 <pre>
 ┏━━━┳━━━┳━━━┳━━━━━━━┳━━━┳━━━━━━━━━━━━━━━┳━━━┳━━━┳━┳━━━┳━┳━━━━━┳━┳━┳━━━┓
-┃   ┃   ┃   ┃       ┃   ┃               ┃   ┃   ┃ ┃   ┃ ┃     ┃ ┃ ┃   ┃
-┃ ┏━┫ ╻ ┃ ╺━╋━╸ ╺━┳━┛ ┏━┻━┓ ╺━┓ ┏━┓ ╺━┳━┫ ╺━┫ ┏━┫ ┗━╸ ╹ ┗━╸ ╺━┛ ╹ ╹ ╺━┫
-┃ ┃ ┃ ┃ ┃   ┃     ┃   ┃   ┃   ┃ ┃ ┃   ┃ ┃   ┃ ┃ ┃                     ┃
-┃ ╹ ┗━┫ ┣━╸ ┗━┓ ╺━╋━┓ ┣━┓ ╹ ╺━┻━┛ ┃ ┏━┫ ┗━╸ ╹ ┃ ╹ ╺━┓ ┏━┳━━━┳━┳━╸ ┏━┓ ┃
-┃     ┃ ┃     ┃   ┃ ┃ ┃ ┃         ┃ ┃ ┃       ┃     ┃ ┃ ┃   ┃ ┃   ┃ ┃ ┃
-┣━╸ ╻ ┃ ┣━━━┓ ╹ ┏━┫ ┃ ╹ ┣━╸ ┏━━━┳━┻━┫ ┃ ╺━━━━━┛ ╺━━━╋━┛ ┃ ╺━┛ ┣━━━┛ ┗━┫
-┃   ┃ ┃ ┃   ┃   ┃ ┃ ┃   ┃   ┃   ┃   ┃ ┃             ┃   ┃     ┃       ┃
-┃ ╻ ┣━┛ ┗━╸ ┗━╸ ╹ ╹ ┗━╸ ┗━╸ ┗━╸ ╹ ╺━┛ ╹ ┏━━━━━┳━┓ ┏━╋━╸ ╹ ╺━┳━╋━╸ ╺━━━┫
-┃ ┃ ┃                                   ┃     ┃ ┃ ┃ ┃       ┃ ┃       ┃
-┃ ┃ ┗━┳━┳━╸ ╻ ┏━┓ ┏━┓ ┏━━━┓ ╻ ╻ ╺━┳━┓ ╻ ╹ ╻ ┏━┛ ┗━┛ ┗━╸ ╻ ╺━┛ ╹ ┏━━━┓ ┃
-┃ ┃   ┃ ┃   ┃ ┃ ┃ ┃ ┃ ┃   ┃ ┃ ┃   ┃ ┃ ┃   ┃ ┃           ┃       ┃   ┃ ┃
-┣━┛ ╺━┛ ╹ ╻ ┃ ┃ ┗━┛ ╹ ╹ ╺━┫ ┗━╋━┳━┛ ┣━┛ ╻ ┗━┛ ╺━┓ ┏━┳━┓ ┗━┳━┳━┓ ┣━╸ ┗━┫
-┃         ┃ ┃ ┃           ┃   ┃ ┃   ┃   ┃       ┃ ┃ ┃ ┃   ┃ ┃ ┃ ┃     ┃
-┃ ╺━━━┓ ╻ ┃ ┃ ┗━┳━┳━╸ ╺━━━┻━━━┛ ┗━╸ ┗━━━┫ ╻ ╻ ╺━┻━┛ ╹ ┗━┳━┛ ┃ ┣━╋━╸ ╺━┫
-┃     ┃ ┃ ┃ ┃   ┃ ┃                     ┃ ┃ ┃           ┃   ┃ ┃ ┃     ┃
-┃ ╺━━━╋━┛ ┣━┛ ╻ ┃ ┗━╸ ╺━┳━┓ ╻ ╻ ╻ ╺━━━┓ ┗━╋━┛ ╻ ╻ ╺━━━┓ ┣━┓ ╹ ╹ ╹ ╺━┳━┫
-┃     ┃   ┃   ┃ ┃       ┃ ┃ ┃ ┃ ┃     ┃   ┃   ┃ ┃     ┃ ┃ ┃         ┃ ┃
-┃ ╺━┳━┛ ╻ ┣━╸ ┃ ┣━━━╸ ╺━┫ ┗━┛ ┗━┫ ╺━━━┫ ╻ ┗━━━╋━┛ ╺━━━┻━┛ ╹ ╺━━━┓ ╻ ╹ ┃
-┃   ┃   ┃ ┃   ┃ ┃       ┃       ┃     ┃ ┃     ┃                 ┃ ┃   ┃
+┃&nbsp;&nbsp;&nbsp;┃&nbsp;&nbsp;&nbsp;┃&nbsp;&nbsp;&nbsp;┃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┃&nbsp;&nbsp;&nbsp;┃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┃&nbsp;&nbsp;&nbsp;┃&nbsp;&nbsp;&nbsp;┃&nbsp;┃&nbsp;&nbsp;&nbsp;┃&nbsp;┃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┃&nbsp;┃&nbsp;┃&nbsp;&nbsp;&nbsp;┃
+┃&nbsp;┏━┫&nbsp;╻&nbsp;┃&nbsp;╺━╋━╸&nbsp;╺━┳━┛&nbsp;┏━┻━┓&nbsp;╺━┓&nbsp;┏━┓&nbsp;╺━┳━┫&nbsp;╺━┫&nbsp;┏━┫&nbsp;┗━╸&nbsp;╹&nbsp;┗━╸&nbsp;╺━┛&nbsp;╹&nbsp;╹&nbsp;╺━┫
+┃&nbsp;┃&nbsp;┃&nbsp;┃&nbsp;┃&nbsp;&nbsp;&nbsp;┃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┃&nbsp;&nbsp;&nbsp;┃&nbsp;&nbsp;&nbsp;┃&nbsp;&nbsp;&nbsp;┃&nbsp;┃&nbsp;┃&nbsp;&nbsp;&nbsp;┃&nbsp;┃&nbsp;&nbsp;&nbsp;┃&nbsp;┃&nbsp;┃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┃
+┃&nbsp;╹&nbsp;┗━┫&nbsp;┣━╸&nbsp;┗━┓&nbsp;╺━╋━┓&nbsp;┣━┓&nbsp;╹&nbsp;╺━┻━┛&nbsp;┃&nbsp;┏━┫&nbsp;┗━╸&nbsp;╹&nbsp;┃&nbsp;╹&nbsp;╺━┓&nbsp;┏━┳━━━┳━┳━╸&nbsp;┏━┓&nbsp;┃
+┃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┃&nbsp;┃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┃&nbsp;&nbsp;&nbsp;┃&nbsp;┃&nbsp;┃&nbsp;┃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┃&nbsp;┃&nbsp;┃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┃&nbsp;┃&nbsp;┃&nbsp;&nbsp;&nbsp;┃&nbsp;┃&nbsp;&nbsp;&nbsp;┃&nbsp;┃&nbsp;┃
+┣━╸&nbsp;╻&nbsp;┃&nbsp;┣━━━┓&nbsp;╹&nbsp;┏━┫&nbsp;┃&nbsp;╹&nbsp;┣━╸&nbsp;┏━━━┳━┻━┫&nbsp;┃&nbsp;╺━━━━━┛&nbsp;╺━━━╋━┛&nbsp;┃&nbsp;╺━┛&nbsp;┣━━━┛&nbsp;┗━┫
+┃&nbsp;&nbsp;&nbsp;┃&nbsp;┃&nbsp;┃&nbsp;&nbsp;&nbsp;┃&nbsp;&nbsp;&nbsp;┃&nbsp;┃&nbsp;┃&nbsp;&nbsp;&nbsp;┃&nbsp;&nbsp;&nbsp;┃&nbsp;&nbsp;&nbsp;┃&nbsp;&nbsp;&nbsp;┃&nbsp;┃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┃&nbsp;&nbsp;&nbsp;┃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┃
+┃&nbsp;╻&nbsp;┣━┛&nbsp;┗━╸&nbsp;┗━╸&nbsp;╹&nbsp;╹&nbsp;┗━╸&nbsp;┗━╸&nbsp;┗━╸&nbsp;╹&nbsp;╺━┛&nbsp;╹&nbsp;┏━━━━━┳━┓&nbsp;┏━╋━╸&nbsp;╹&nbsp;╺━┳━╋━╸&nbsp;╺━━━┫
+┃&nbsp;┃&nbsp;┃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┃&nbsp;┃&nbsp;┃&nbsp;┃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┃&nbsp;┃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┃
+┃&nbsp;┃&nbsp;┗━┳━┳━╸&nbsp;╻&nbsp;┏━┓&nbsp;┏━┓&nbsp;┏━━━┓&nbsp;╻&nbsp;╻&nbsp;╺━┳━┓&nbsp;╻&nbsp;╹&nbsp;╻&nbsp;┏━┛&nbsp;┗━┛&nbsp;┗━╸&nbsp;╻&nbsp;╺━┛&nbsp;╹&nbsp;┏━━━┓&nbsp;┃
+┃&nbsp;┃&nbsp;&nbsp;&nbsp;┃&nbsp;┃&nbsp;&nbsp;&nbsp;┃&nbsp;┃&nbsp;┃&nbsp;┃&nbsp;┃&nbsp;┃&nbsp;&nbsp;&nbsp;┃&nbsp;┃&nbsp;┃&nbsp;&nbsp;&nbsp;┃&nbsp;┃&nbsp;┃&nbsp;&nbsp;&nbsp;┃&nbsp;┃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┃&nbsp;&nbsp;&nbsp;┃&nbsp;┃
+┣━┛&nbsp;╺━┛&nbsp;╹&nbsp;╻&nbsp;┃&nbsp;┃&nbsp;┗━┛&nbsp;╹&nbsp;╹&nbsp;╺━┫&nbsp;┗━╋━┳━┛&nbsp;┣━┛&nbsp;╻&nbsp;┗━┛&nbsp;╺━┓&nbsp;┏━┳━┓&nbsp;┗━┳━┳━┓&nbsp;┣━╸&nbsp;┗━┫
+┃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┃&nbsp;┃&nbsp;┃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┃&nbsp;&nbsp;&nbsp;┃&nbsp;┃&nbsp;&nbsp;&nbsp;┃&nbsp;&nbsp;&nbsp;┃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┃&nbsp;┃&nbsp;┃&nbsp;┃&nbsp;&nbsp;&nbsp;┃&nbsp;┃&nbsp;┃&nbsp;┃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┃
+┃&nbsp;╺━━━┓&nbsp;╻&nbsp;┃&nbsp;┃&nbsp;┗━┳━┳━╸&nbsp;╺━━━┻━━━┛&nbsp;┗━╸&nbsp;┗━━━┫&nbsp;╻&nbsp;╻&nbsp;╺━┻━┛&nbsp;╹&nbsp;┗━┳━┛&nbsp;┃&nbsp;┣━╋━╸&nbsp;╺━┫
+┃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┃&nbsp;┃&nbsp;┃&nbsp;┃&nbsp;&nbsp;&nbsp;┃&nbsp;┃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┃&nbsp;┃&nbsp;┃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┃&nbsp;&nbsp;&nbsp;┃&nbsp;┃&nbsp;┃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┃
+┃&nbsp;╺━━━╋━┛&nbsp;┣━┛&nbsp;╻&nbsp;┃&nbsp;┗━╸&nbsp;╺━┳━┓&nbsp;╻&nbsp;╻&nbsp;╻&nbsp;╺━━━┓&nbsp;┗━╋━┛&nbsp;╻&nbsp;╻&nbsp;╺━━━┓&nbsp;┣━┓&nbsp;╹&nbsp;╹&nbsp;╹&nbsp;╺━┳━┫
+┃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┃&nbsp;&nbsp;&nbsp;┃&nbsp;&nbsp;&nbsp;┃&nbsp;┃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┃&nbsp;┃&nbsp;┃&nbsp;┃&nbsp;┃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┃&nbsp;&nbsp;&nbsp;┃&nbsp;&nbsp;&nbsp;┃&nbsp;┃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┃&nbsp;┃&nbsp;┃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┃&nbsp;┃
+┃&nbsp;╺━┳━┛&nbsp;╻&nbsp;┣━╸&nbsp;┃&nbsp;┣━━━╸&nbsp;╺━┫&nbsp;┗━┛&nbsp;┗━┫&nbsp;╺━━━┫&nbsp;╻&nbsp;┗━━━╋━┛&nbsp;╺━━━┻━┛&nbsp;╹&nbsp;╺━━━┓&nbsp;╻&nbsp;╹&nbsp;┃
+┃&nbsp;&nbsp;&nbsp;┃&nbsp;&nbsp;&nbsp;┃&nbsp;┃&nbsp;&nbsp;&nbsp;┃&nbsp;┃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┃&nbsp;┃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┃&nbsp;┃&nbsp;&nbsp;&nbsp;┃
 ┗━━━┻━━━┻━┻━━━┻━┻━━━━━━━┻━━━━━━━┻━━━━━┻━┻━━━━━┻━━━━━━━━━━━━━━━━━┻━┻━━━┛
 </pre>
 
