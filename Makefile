@@ -1,3 +1,5 @@
+.include <bsd.compiler.mk>
+
 PROG = maze
 NO_MAN =
 
@@ -6,33 +8,26 @@ SRCS += maze.c
 
 
 CSTD = c11
-CFLAGS = -pipe -pedantic -Werror -march=native
-LDFLAGS =
-
-.if ${CC:T:Mclang*}
-CFLAGS += -Weverything -fcolor-diagnostics
-.elif ${CC:T:Mgcc*}
-# suppress a bogus warning for maze.c:pov_move()
-CFLAGS += -Wall -Wextra -Wno-error=return-type
-.endif
-
-
-.if make(release)
-CFLAGS += -O3 -fomit-frame-pointer -DNDEBUG
-LDFLAGS += -s
-release: all
-.endif
+SSP_CFLAGS =
+CFLAGS  = -pipe -pedantic -Werror -march=native
+#CFLAGS +=-fshort-enums
 
 .if make(debug)
 CFLAGS += -O0 -g
-debug: all
+.else
+CFLAGS += -O3 -fomit-frame-pointer -DNDEBUG
+LDFLAGS = -s
 .endif
 
-.if make(analyze)
-STATIC_ANALYZER ?= /usr/local/bin/scan-build35
-analyze:
-	$(STATIC_ANALYZER) make clean debug
+
+.if ${COMPILER_TYPE} == "clang"
+CFLAGS += -Weverything -fcolor-diagnostics
+.else # assume gcc
+CFLAGS += -Wall -Wextra
 .endif
+
+
+debug: all
 
 
 .include <bsd.prog.mk>

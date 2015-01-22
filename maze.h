@@ -5,6 +5,7 @@ enum maze_gen {
   maze_prm,
   maze_dfs,
   maze_div,
+  maze_gen_max = maze_div
 };
 
 struct maze;

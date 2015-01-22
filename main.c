@@ -13,12 +13,12 @@
 extern const char *const __progname;
 
 
-static _Noreturn void  die(int);
+static _Noreturn void  usage(void);
 static unsigned int    read_arg(const char *const s, const char *const arg, unsigned int min, unsigned int max);
 
 
 static void
-die(int status)
+usage(void)
 {
   const char *const usage =
     "Usage: %s <gen> <width> <height> [delay]\n"
@@ -32,11 +32,8 @@ die(int status)
     "Example: %s 0 70 20 50\n"
     "\n";
 
-  if (status == EX_USAGE) {
-    fprintf(stderr, usage, __progname, __progname);
-    exit(status);
-  } else
-    errx(status, "%s", strerror(errno));
+  fprintf(stderr, usage, __progname, __progname);
+  exit(EX_USAGE);
 }
 
 
@@ -49,7 +46,7 @@ read_arg(const char *const str, const char *const arg, unsigned int min, unsigne
   n = strtonum(str, min, max, NULL);
   if ((n == 0) && (errno != 0)) {
     fprintf(stderr, "%s: Parameter <%s> is out of range\n\n", __progname, arg);
-    die(EX_USAGE);
+    usage();
   }
 
   return (unsigned int)n;
@@ -70,16 +67,16 @@ main(int argc, char **argv)
     delay  = read_arg(argv[4], "delay",  0, 1000);
     /* FALLTHROUGH */
   case 4:
-    gen    = read_arg(argv[1], "gen",    0, 3);
+    gen    = read_arg(argv[1], "gen",    0, maze_gen_max);
     width  = read_arg(argv[2], "width",  0, UINT_MAX);
     height = read_arg(argv[3], "height", 0, UINT_MAX);
     break;
   default:
-    die(EX_USAGE);
+    usage();
   }
 
   maze_setsteptime(delay);
-  m = maze_new(width, height, gen);
+  m = maze_new(width, height, (enum maze_gen)gen);
   maze_dump(m);
   maze_delete(m);
 
