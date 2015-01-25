@@ -1,18 +1,22 @@
 #ifndef MAZE_H_
 #define MAZE_H_
 
-enum maze_gen {
-  maze_prm,
-  maze_dfs,
-  maze_div,
-  maze_gen_max = maze_div
+#include <stdio.h>
+
+
+enum mazegen {
+  mazegen_prm,
+  mazegen_dfs,
+  mazegen_div,
+  mazegen_max = mazegen_div
 };
 
 struct maze;
 
 void         maze_delete(struct maze *m);
-void         maze_dump(const struct maze *const m);
-struct maze *maze_new(unsigned cols, unsigned rows, enum maze_gen gen);
+void         maze_dump_txt(const struct maze *const m);
+void         maze_dump_tga(const struct maze *const m, FILE *const tgaimg);
+struct maze *maze_new(unsigned short cols, unsigned short rows, enum mazegen gen);
 void         maze_setsteptime(unsigned int ms);
 
-#endif // MAZE_H_
+#endif /* MAZE_H_ */

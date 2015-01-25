@@ -7,6 +7,7 @@
 #include <wchar.h>
 
 #include "maze.h"
+#include "tga.h"
 
 
 #define NDIRS  4
@@ -29,7 +30,7 @@ static const char  type_wall  = 'X';
 static const char  type_list  = '+';
 static const char  type_inval = '?';
 
-/* XXX: *sniff* *sniff* ...code smell! (maze generation != maze presentation) */
+
 static useconds_t  g_steptime;
 static wchar_t    *g_dumpbuf;
 
@@ -49,9 +50,9 @@ static wchar_t    *g_dumpbuf;
  */
 
 struct maze {
-  unsigned int  w;
-  unsigned int  h;
-  char          buf[];
+  unsigned short  w;
+  unsigned short  h;
+  char            buf[];
 };
 
 struct pos {
@@ -100,7 +101,7 @@ list_new(unsigned int len)
 
   list = malloc(sizeof*list + (len * sizeof*list->buf));
   if (list == NULL)
-    errx(EX_UNAVAILABLE, "%s: alloc", __func__);
+    errx(EX_UNAVAILABLE, "%s: malloc", __func__);
   list->len = 0;
 
   return list;
@@ -200,7 +201,7 @@ type_set(struct maze *const m, struct pos p, char type)
 }
 
 
-/* Helper function for maze_dump() */
+/* Helper function for maze_dump_txt() */
 static int
 is_wall(const struct maze *const m, unsigned int x, unsigned int y)
 {
@@ -387,11 +388,10 @@ maze_showstep(const struct maze *const m)
 {
   if (g_steptime) {
     printf(VT100_CursorHome);
-    maze_dump(m);
+    maze_dump_txt(m);
     usleep(g_steptime);
   }
 }
-
 
 
 void
@@ -405,7 +405,7 @@ maze_delete(struct maze *m)
 /* Outputs a beautified version of the plain ASCII maze to stdout,
  * uses fancy Unicode "Box drawing" elements */
 void
-maze_dump(const struct maze *const m)
+maze_dump_txt(const struct maze *const m)
 {
   wchar_t *p;
   unsigned int x, y;
@@ -462,14 +462,74 @@ maze_dump(const struct maze *const m)
 }
 
 
+/* Creates an uncompressed, 8-bit grayscale TGA image of the maze */
+void
+maze_dump_tga(const struct maze *const m, FILE *const tgaimg)
+{
+  struct tga_header header;
+  size_t npixels, bufsize;
+  unsigned char *buffer, *p;
+  unsigned int x, y;
+
+  header = (struct tga_header) {
+    .id_len     = 0,
+    .map_type   = TGA_NO_COLOR_MAP,
+    .img_type   = TGA_UNCOMPRESSED_GRAYSCALE,
+    .map_idx    = 0,
+    .map_len    = 0,
+    .map_elemsz = 0,
+    .img_x      = 0,
+    .img_y      = 0,
+    .img_w      = m->w + 2, /* add frame width */
+    .img_h      = m->h + 2, /* add frame width */
+    .img_depth  = 8,
+    .img_alpha  = 0,
+    .img_dir    = 2,
+  };
+
+  npixels = header.img_w * header.img_h;
+  bufsize = npixels * header.img_depth/8;
+  buffer = p = malloc(bufsize);
+  if (buffer == NULL)
+    errx(EX_UNAVAILABLE, "%s: malloc", __func__);
+
+  /* top of frame */
+  for (x = 0; x < header.img_w; ++x)
+    *p++ = 0x00;
+  /* left side of frame, maze and right side of frame */
+  for (y = 0; y < m->h; ++y) {
+    *p++ = 0x00;                /* left piece of frame */
+    for (x = 0; x < m->w; ++x)  /* a line from the maze */
+      *p++ = is_wall(m, x, y) ? 0x00 : 0xFF;
+    *p++ = 0x00;                /* right piece of frame */
+  }
+  /* bottom of frame */
+  for (x = 0; x < header.img_w; ++x)
+    *p++ = 0x00;
+
+  fwrite(&header, 1, sizeof header, tgaimg);
+  if (ferror(tgaimg)) errx(EX_IOERR, "%s: fwrite()", __func__);
+  fwrite(buffer, 1, bufsize, tgaimg);
+  if (ferror(tgaimg)) errx(EX_IOERR, "%s: fwrite()", __func__);
+
+  fclose(tgaimg);
+  free(buffer);
+}
+
+
 struct maze *
-maze_new(unsigned int w, unsigned int h, enum maze_gen gen)
+maze_new(unsigned short w, unsigned short h, enum mazegen gen)
 {
   struct maze *maze;
   size_t bufsize;
 
   if (w < 5) w = 5;
   if (h < 5) h = 5;
+
+  /* remove the frame during the maze generation,
+   * the output functions will add it again */
+  w -= 2;
+  h -= 2;
 
   /* keep the effective width and effective height even
    * by making them odd (Q: wat?! A: think [0..3]) */
@@ -479,7 +539,7 @@ maze_new(unsigned int w, unsigned int h, enum maze_gen gen)
   bufsize = w * h * sizeof*maze->buf;
   maze = malloc(sizeof*maze + bufsize);
   if (maze == NULL)
-    errx(EX_UNAVAILABLE, "%s: alloc", __func__);
+    errx(EX_UNAVAILABLE, "%s: malloc", __func__);
 
   maze->w = w;
   maze->h = h;
@@ -491,15 +551,15 @@ maze_new(unsigned int w, unsigned int h, enum maze_gen gen)
   nelem += 1;                          /* the NUL terminator */
   g_dumpbuf = malloc(nelem * sizeof*g_dumpbuf);
   if (g_dumpbuf == NULL)
-    errx(EX_UNAVAILABLE, "%s: alloc", __func__);
+    errx(EX_UNAVAILABLE, "%s: malloc", __func__);
 
   if (g_steptime)
     printf(VT100_EraseScreen);
 
   switch (gen) {
-  case maze_dfs: maze_gen_dfs(maze); break;
-  case maze_div: maze_gen_div(maze); break;
-  case maze_prm: maze_gen_prm(maze); break;
+  case mazegen_dfs: maze_gen_dfs(maze); break;
+  case mazegen_div: maze_gen_div(maze); break;
+  case mazegen_prm: maze_gen_prm(maze); break;
   }
 
   if (g_steptime)
