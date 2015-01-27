@@ -85,6 +85,8 @@ static char          type_get(const struct maze *const m, struct pos p);
 static void          type_set(struct maze *const m, struct pos p, char type);
 static int           is_wall(const struct maze *const m, unsigned int x, unsigned int y);
 
+static uint16_t      uint16_le(uint16_t num);
+
 static void          maze_gen_dfs(struct maze *const m);
 static void          maze_gen_dfs_recur(struct maze *const m, struct pos p);
 static void          maze_gen_div(struct maze *const m);
@@ -210,6 +212,19 @@ is_wall(const struct maze *const m, unsigned int x, unsigned int y)
     return (m->buf[m->w*y + x] != type_empty);
   else
     return 1; /* part of the frame, ergo wall */
+}
+
+
+/* Returns the little-endian representation of num,
+ * helper function for maze_dump_tga() */
+static uint16_t
+uint16_le(uint16_t num)
+{
+  union {
+    uint16_t native;
+    uint8_t  byte[2];
+  } tmp = { .native = num };
+  return (uint16_t)(tmp.byte[0]<<0 | tmp.byte[1]<<8);
 }
 
 
@@ -431,7 +446,7 @@ maze_dump_txt(const struct maze *const m)
       w = is_wall(m, x-1, y);
       e = is_wall(m, x+1, y);
       s = is_wall(m, x, y+1);
-      idx = n | w<<1 | e<<2 | s<<3;
+      idx = n<<0 | w<<1 | e<<2 | s<<3;
       *p++ = frame[idx-1];
     }
     *p++ = is_wall(m, x-1, y) ? L'┫' : L'┃';  /* right piece of frame */
@@ -455,10 +470,16 @@ maze_dump_txt(const struct maze *const m)
 void
 maze_dump_tga(const struct maze *const m, FILE *const tgaimg)
 {
+  static const uint8_t  black = 0x00, white = 0xFF;
+
   struct tga_header header;
   size_t npixels, bufsize;
   unsigned char *buffer, *p;
   unsigned int x, y;
+  uint16_t w_le, h_le;
+
+  w_le = uint16_le(m->w + 2);  /* add frame width*/
+  h_le = uint16_le(m->h + 2);  /* add frame width */
 
   header = (struct tga_header) {
     .id_len     = 0,
@@ -469,8 +490,8 @@ maze_dump_tga(const struct maze *const m, FILE *const tgaimg)
     .map_elemsz = 0,
     .img_x      = 0,
     .img_y      = 0,
-    .img_w      = m->w + 2, /* add frame width */
-    .img_h      = m->h + 2, /* add frame width */
+    .img_w      = w_le,
+    .img_h      = h_le,
     .img_depth  = 8,
     .img_alpha  = 0,
     .img_dir    = 2,
@@ -484,22 +505,22 @@ maze_dump_tga(const struct maze *const m, FILE *const tgaimg)
 
   /* top of frame */
   for (x = 0; x < header.img_w; ++x)
-    *p++ = 0x00;
+    *p++ = black;
   /* left side of frame, maze and right side of frame */
   for (y = 0; y < m->h; ++y) {
-    *p++ = 0x00;                /* left piece of frame */
+    *p++ = black;               /* left piece of frame */
     for (x = 0; x < m->w; ++x)  /* a line from the maze */
-      *p++ = is_wall(m, x, y) ? 0x00 : 0xFF;
-    *p++ = 0x00;                /* right piece of frame */
+      *p++ = is_wall(m, x, y) ? black : white;
+    *p++ = black;               /* right piece of frame */
   }
   /* bottom of frame */
   for (x = 0; x < header.img_w; ++x)
-    *p++ = 0x00;
+    *p++ = black;
 
   fwrite(&header, 1, sizeof header, tgaimg);
-  if (ferror(tgaimg)) errx(EX_IOERR, "%s: fwrite()", __func__);
   fwrite(buffer, 1, bufsize, tgaimg);
-  if (ferror(tgaimg)) errx(EX_IOERR, "%s: fwrite()", __func__);
+  if (ferror(tgaimg))
+    errx(EX_IOERR, "%s: fwrite()", __func__);
 
   fclose(tgaimg);
   free(buffer);
