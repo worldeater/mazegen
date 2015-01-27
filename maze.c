@@ -201,14 +201,15 @@ type_set(struct maze *const m, struct pos p, char type)
 }
 
 
-/* Helper function for maze_dump_txt() */
+/* Helper function for maze_dump_txt() and maze_dump_tga() */
 static int
 is_wall(const struct maze *const m, unsigned int x, unsigned int y)
 {
+  /* x != type_empty is used to draw nodes of type_list as walls */
   if ((x < m->w) && (y < m->h))
     return (m->buf[m->w*y + x] != type_empty);
   else
-    return 1;
+    return 1; /* part of the frame, ergo wall */
 }
 
 
@@ -232,13 +233,13 @@ maze_gen_dfs_recur(struct maze *const m, struct pos current)
 {
   struct pos neighbor, wall;
   unsigned int dlen;
-  enum dir dir;
+  enum dir *dirs, dir;
 
   maze_showstep(m);
 
   type_set(m, current, type_empty);
 
-  enum dir dirs[NDIRS] = { north, west, east, south };
+  dirs = (enum dir[]){ north, west, east, south };
   for (dlen = NDIRS; dlen > 0; --dlen) {
     dir = pick_rnd_dir(dirs, dlen);
 
@@ -344,7 +345,7 @@ maze_gen_prm(struct maze *const m)
   struct list *l;
   struct pos current, neighbor, wall;
   unsigned int dlen;
-  enum dir dir;
+  enum dir *dirs, dir;
 
   l = list_new((m->w+m->h)*4); /* XXX: Value guesstimated after observing the
                                        maximum list size of a couple of runs */
@@ -364,7 +365,7 @@ maze_gen_prm(struct maze *const m)
     current = list_remove_random(l);
     type_set(m, current, type_empty);
 
-    enum dir dirs[NDIRS] = { north, west, east, south };
+    dirs = (enum dir[]){ north, west, east, south };
     for (dlen = NDIRS; dlen > 0; --dlen) {
       dir = pick_rnd_dir(dirs, dlen);
 
@@ -407,9 +408,10 @@ maze_delete(struct maze *m)
 void
 maze_dump_txt(const struct maze *const m)
 {
+  static const wchar_t *const frame = L"╹╸┛╺┗━┻╻┃┓┫┏┣┳╋";
   wchar_t *p;
   unsigned int x, y;
-  int n, e, s, w;
+  int n, e, s, w, idx;
 
   p = g_dumpbuf;
 
@@ -426,24 +428,11 @@ maze_dump_txt(const struct maze *const m)
     for (x = 0; x < m->w; ++x) {            /* a line from the maze */
       if (!is_wall(m, x, y)) { *p++ = L' '; continue; }
       n = is_wall(m, x, y-1);
+      w = is_wall(m, x-1, y);
       e = is_wall(m, x+1, y);
       s = is_wall(m, x, y+1);
-      w = is_wall(m, x-1, y);
-      if (n && s && e && w) { *p++ = L'╋'; continue; }
-      if (n && s && e)      { *p++ = L'┣'; continue; }
-      if (n && s && w)      { *p++ = L'┫'; continue; }
-      if (e && w && n)      { *p++ = L'┻'; continue; }
-      if (e && w && s)      { *p++ = L'┳'; continue; }
-      if (s && e)           { *p++ = L'┏'; continue; }
-      if (s && w)           { *p++ = L'┓'; continue; }
-      if (n && e)           { *p++ = L'┗'; continue; }
-      if (n && w)           { *p++ = L'┛'; continue; }
-      if (n && s)           { *p++ = L'┃'; continue; }
-      if (w && e)           { *p++ = L'━'; continue; }
-      if (n)                { *p++ = L'╹'; continue; }
-      if (e)                { *p++ = L'╺'; continue; }
-      if (s)                { *p++ = L'╻'; continue; }
-      if (w)                { *p++ = L'╸'; continue; }
+      idx = n | w<<1 | e<<2 | s<<3;
+      *p++ = frame[idx-1];
     }
     *p++ = is_wall(m, x-1, y) ? L'┫' : L'┃';  /* right piece of frame */
     *p++ = L'\n';
@@ -521,18 +510,15 @@ struct maze *
 maze_new(unsigned short w, unsigned short h, enum mazegen gen)
 {
   struct maze *maze;
-  size_t bufsize;
+  size_t bufsize, nelem;
 
+  /* enforce a minimum maze size */
   if (w < 5) w = 5;
   if (h < 5) h = 5;
-
-  /* remove the frame during the maze generation,
-   * the output functions will add it again */
+  /* remove the frame during the maze generation */
   w -= 2;
   h -= 2;
-
-  /* keep the effective width and effective height even
-   * by making them odd (Q: wat?! A: think [0..3]) */
+  /* make sure width and height are odd numbers */
   if (w % 2 == 0) --w;
   if (h % 2 == 0) --h;
 
@@ -544,7 +530,6 @@ maze_new(unsigned short w, unsigned short h, enum mazegen gen)
   maze->w = w;
   maze->h = h;
 
-  size_t nelem;
   nelem  = maze->w * maze->h;          /* the maze itself */
   nelem += 2*maze->w + 2*maze->h + 4;  /* its frame */
   nelem += maze->h + 2;                /* newlines after maze and frame */
@@ -572,6 +557,6 @@ maze_new(unsigned short w, unsigned short h, enum mazegen gen)
 void
 maze_setsteptime(unsigned int ms)
 {
-  g_steptime = ms * 1000; /* ms to µm */
+  g_steptime = ms * 1000; /* ms to µs */
 }
 

@@ -9,7 +9,6 @@ SRCS += maze.c
 
 CSTD = c11
 SSP_CFLAGS =
-CFLAGS  = -pipe -pedantic -Werror -march=native
 
 .if make(debug)
 CFLAGS += -O0 -g
@@ -18,11 +17,10 @@ CFLAGS += -O3 -fomit-frame-pointer -DNDEBUG
 LDFLAGS = -s
 .endif
 
-
 .if ${COMPILER_TYPE} == "clang"
-CFLAGS += -Weverything -fcolor-diagnostics
+CFLAGS += -pedantic -Werror -Weverything -fcolor-diagnostics
 .else  # assume it's GCC (or something compatible)
-CFLAGS += -Wall -Wextra
+CFLAGS += -pedantic -Werror -Wall -Wextra
 .endif
 
 
