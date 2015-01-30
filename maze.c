@@ -494,7 +494,9 @@ maze_dump_tga(const struct maze *const m, FILE *const tgaimg)
     .img_h      = h_le,
     .img_depth  = 8,
     .img_alpha  = 0,
-    .img_dir    = 2,
+    ._reserved  = 0,
+    .img_origin = TGA_ORIGIN_UPPER_LEFT,
+    .img_store  = 0,
   };
 
   npixels = header.img_w * header.img_h;
